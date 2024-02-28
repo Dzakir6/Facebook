@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" type="image" href="image/favicon.ico">
+    <title>Facebook - Clone Coding</title>
+    <style>
+        @import url(css/default.css);
+        @import url(css/gnb.css);
+        @import url(css/main.css);
+        .story-top {
+            height: 60px;
+            border-bottom: 0.5px solid #f2f2f2;
+        }
+
+        .story-top>div {
+            width: 200px;
+            border-radius: 5px;
+            height: 50px;
+            margin-right: 5px;
+            font-size: 15px;
+            font-weight: 600;
+            color: grey;
+            cursor: pointer;
+        }
+
+        .story-top>div:first-child {
+            color: blue;
+            border-bottom: 3px solid blue;
+            border-radius: 0px;
+        }
+
+        .story-top>div:hover {
+            background-color: #f2f2f2;
+        }
+
+        .story-bottom {
+            padding: 15px;
+        }
+
+        .profile {
+            width: 115px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 0.5px solid #f2f2f2;
+            box-shadow: 0px 0px 5px 0px lightgray;
+            position: relative;
+        }
+
+        .profile>span {
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            margin-left: 20px;
+            margin-right: auto;
+            align-items: flex-start;
+        }
+
+        .description>li {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .description>li img {
+            margin-right: 10px;
+        }
+
+        .plus {
+            width: 25px;
+            height: 25px;
+            background-color: blue;
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            top: 133px;
+        }
+
+        .profile-image {
+            background: linear-gradient(to bottom, transparent, lightgray), url("image/feed/30.jpg");
+            width: 100%;
+            height: 100%;
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .create {
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .create-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 0.5px solid #f2f2f2;
+        }
+
+        .create-top {
+            border-bottom: 0.5px solid #f2f2f2;
+            padding-bottom: 10px;
+        }
+
+        .create-top>input {
+            background-color: #f2f2f2;
+            border-radius: 40px;
+            width: 618px;
+            height: 40px;
+            margin-left: 5px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            box-sizing: border-box;
+            text-indent: 10px;
+        }
+
+        .create-bottom>li {
+            width: 220px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .create-bottom>li:hover {
+            background-color: #f2f2f2;
+        }
+
+        .create-bottom>li>span {
+            margin-left: 5px;
+            font-size: 14px;
+            color: grey;
+        }
+
+        .create>button {
+            width: 100%;
+            border-radius: 8px;
+            background-color: blue;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            height: 40px;
+
+            margin-top: 5px;
+            border: none;
+            cursor: pointer;
+
+            display: none;
+        }
+
+        .create>button:hover {
+            background-color: darkblue;
+        }
+
+        .feed-profile {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .feed-more {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .feed-more:hover {
+            background-color: #f2f2f2;
+        }
+
+        .feed {
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .feed-top {
+            width: 100%;
+        }
+
+        .feed-name {
+            margin-left: 15px;
+            margin-right: auto;
+
+            align-items: flex-start;
+        }
+
+        .feed-name>span:first-child {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .feed-name>span:last-child {
+            font-size: 12px;
+            font-weight: normal;
+            color: grey;
+        }
+
+        .feed>p {
+            font-size: 14px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .feed>img {
+            width: calc(100% + 30px);
+        }
+
+        .feed-like {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            border-bottom: 1px solid #f2f2f2;
+
+            font-size: 14px;
+            color: gray;
+            padding-bottom: 10px;
+        }
+
+        .like-count {
+            margin-left: 5px;
+            margin-right: auto;
+        }
+
+        .feed-button>li {
+            width: 270px;
+            height: 44px;
+            border-radius: 8px;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        .feed-button>li>span {
+            margin-left: 5px;
+            font-size: 14px;
+            color: grey;
+            font-weight: bold;
+        }
+
+        .feed-button>li:hover {
+            background-color: #f2f2f2;
+        }
+
+        .menu-modal {
+            position: fixed;
+            top: 55px;
+            right: 10px;
+            width: 560px;
+            border-radius: 8px;
+            background-color: #f7f7fa;
+            box-shadow: 0px 0px 10px 0px lightgray;
+            padding: 20px;
+            box-sizing: border-box;
+
+            display: none;
+        }
+
+        .menu-modal>span {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+
+            display: block;
+        }
+
+        .menu-modal>.content {
+            align-items: flex-start;
+        }
+
+        .social {
+            width: 280px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0px 0px 3px 0px lightgray;
+
+            padding: 15px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .modal-search-box {
+            width: 240px;
+            height: 40px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .modal-search-box>input {
+            width: 200px;
+            margin-left: 10px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            font-size: 14px;
+
+        }
+
+        .social>span {
+            font-size: 16px;
+            margin-right: auto;
+            margin-left: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .social>li {
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        .social>li>img {
+            margin-right: 5px;
+        }
+
+        .social>li>div {
+            align-items: flex-start;
+            margin-right: auto;
+        }
+
+        .social>li>div>span {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .social>li>div>p {
+            font-size: 12px;
+            color: grey;
+        }
+
+        .modal-create {
+            width: 240px;
+
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0px 0px 3px 0px lightgray;
+
+            padding: 15px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .modal-create>span {
+            font-size: 20px;
+            margin-right: auto;
+            margin-left: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal-create>li {
+            width: 100%;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .modal-create>hr {
+            width: 100%;
+            border: none;
+            border-top: 0.1px solid #d2d2d2;
+        }
+
+        .modal-create>li:hover {
+            background-color: #f2f2f2;
+        }
+
+        .modal-create>li>div {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e4e6eb;
+            overflow: hidden;
+        }
+
+        .modal-create>li>span {
+            margin-left: 5px;
+            margin-right: auto;
+        }
+
+        .account-modal {
+            position: fixed;
+            top: 50px;
+            right: 10px;
+
+            width: 360px;
+            padding: 15px;
+            box-sizing: border-box;
+
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0px 0px 10px 0px lightgray;
+
+            display: none;
+        }
+
+        .account-info {
+            width: 325px;
+
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px lightgray;
+
+            margin-bottom: 10px;
+        }
+
+        .account-profile {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .account-profile:hover {
+            background-color: #f2f2f2;
+        }
+
+        .account-profile>div {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid #f2f2f2;
+
+            margin-right: 10px;
+        }
+
+        .account-profile>span {
+            margin-right: auto;
+        }
+
+        .account-info>hr {
+            width: 100%;
+        }
+
+        .account-info>div:last-child {
+            color: blue;
+            height: 28px;
+            border-radius: 8px;
+            padding: 15px 5px;
+            align-items: flex-start;
+        }
+
+        .account-info>div {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .account-info>div:hover {
+            background-color: #f2f2f2;
+        }
+
+        .account-modal>li>div {
+            width: 36px;
+            height: 36px;
+            overflow: hidden;
+            border-radius: 50%;
+            background-color: #e4e6eb;
+        }
+
+        .account-modal>li>span {
+            margin-left: 5px;
+            margin-right: auto;
+        }
+
+        .account-modal>li {
+            padding: 10px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .account-modal>li:hover {
+            background-color: #f2f2f2;
+        }
+
+        .account-modal>li:hover>div {
+            filter: brightness(0.95);
+        }
+    </style>
+    <script>
+        function showIcon() {
+            $('#search-icon').show()
+        }
+        function hideIcon() {
+            $('#search-icon').hide()
+        }
+        function showButton() {
+            $('#btn-post').show()
+        }
+        function postIt() {
+            alert('Post Complated!');
+            $('#btn-post').hide()
+        }
+        function menuModal() {
+            let status = $('#menu-modal').css('display')
+            if (status == 'block') {
+                $('#menu-modal').hide()
+            } else {
+                $('#menu-modal').show()
+            }
+        }
+
+
+        let is_menu = true;
+
+        function gnbMenu() {
+            if (is_menu == true) {
+                $('#gnb-menu').attr('src', 'image/gnb/10.png');
+                is_menu = false;
+            } else {
+                $('#gnb-menu').attr('src', 'image/gnb/6.png');
+                is_menu = true;
+            }
+        }
+
+        function accountModal() {
+            let status = $('#account-modal').css('display')
+            if (status == 'block') {
+                $('#account-modal').hide()
+            } else {
+                $('#account-modal').show()
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="gnb flex-row">
+        <div class="gnb-left flex-row">
+            <img width="40" src="image/logo.png">
+            <div class="search-box flex-row">
+                <i id="search-icon" class="bi bi-search"></i>
+                <input placeholder="Husni Mudzakir" type="text" onfocus="hideIcon()" onblur="showIcon()">
+            </div>
+        </div>
+        <div class="gnb-middle flex-row">
+            <div class="nav-tab flex-row">
+                <img src="image/gnb/1.png" alt="">
+            </div>
+            <div class="nav-tab flex-row">
+                <img src="image/gnb/2.png" alt="">
+            </div>
+            <div class="nav-tab flex-row">
+                <img src="image/gnb/3.png" alt="">
+            </div>
+            <div class="nav-tab flex-row">
+                <img src="image/gnb/4.png" alt="">
+            </div>
+            <div class="nav-tab flex-row">
+                <img src="image/gnb/5.png" alt="">
+            </div>
+        </div>
+        <div class="gnb-right flex-row">
+            <div onclick="menuModal()" class="nav-tab-right flex-row">
+                <img id="gnb-menu" onclick="gnbMenu()" src="image/gnb/6.png" alt="">
+            </div>
+
+            <div class="nav-tab-right flex-row">
+                <img src="image/gnb/7.png" alt="">
+            </div>
+
+            <div class="nav-tab-right flex-row">
+                <img src="image/gnb/8.png" alt="">
+            </div>
+
+            <div onclick="accountModal()" class="nav-tab-right flex-row">
+                <img src="image/gnb/Me.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="main flex-row">
+        <div class="main-left">
+            <li class="flex-row">
+                <div class=" flex-row">
+                    <img src="image/feed/Me1.jpg" alt="">
+                </div>
+                <span>HusniMudzakir</span>
+            </li>
+            <li class="flex-row">
+                <img src="image/feed/2.png" alt="">
+                <span>Find Friends</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/3.png" alt="">
+                <span>Memories</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/4.png" alt="">
+                <span>Group</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/5.png" alt="">
+                <span>Watch</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/6.png" alt="">
+                <span>Saved</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/7.png" alt="">
+                <span>Pages</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/8.png" alt="">
+                <span>Events</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/9.png" alt="">
+                <span>Most Recent</span>
+            </li>
+
+            <li class="flex-row">
+                <img src="image/feed/10.png" alt="">
+                <span>Favorites</span>
+            </li>
+
+
+            <li class="flex-row">
+                <div class=" flex-row">
+                    <img src="image/feed/seemore.png" alt="">
+                </div>
+                <span>See More</span>
+            </li>
+            <hr>
+        </div>
+        <div class="main-middle ">
+            <div class="story">
+                <div class="story-top flex-row">
+                    <div class="flex-row">Stories</div>
+                    <div class="flex-row">Reels</div>
+                    <div class="flex-row">Rooms</div>
+                </div>
+
+                <div class="story-bottom flex-row ">
+                    <div class="profile flex-col">
+                        <div class="profile-image"></div>
+                        <span>Create Story</span>
+                        <div class="plus flex-row">
+                            <img src="image/feed/12.png">
+                        </div>
+                    </div>
+                    <div class="description flex-col">
+                        <li class="flex-row">
+                            <img src="image/feed/13.png">
+                            <span>Shere everyday momments with friends and family.</span>
+                        </li>
+                        <li class="flex-row">
+                            <img src="image/feed/14.png">
+                            <span>Stories disappear after 24 hours.</span>
+                        </li>
+                        <li class="flex-row">
+                            <img src="image/feed/15.png">
+                            <span>Replies and reactions are private.</span>
+                        </li>
+                    </div>
+                </div>
+
+            </div>
+            <div class="create flex-col">
+                <div class="create-top flex-row">
+                    <div class="create-profile">
+                        <img src="image/feed/Me1.jpg" alt="">
+                    </div>
+                    <input onfocus="showButton()" onblur="hideButton()" type="text" placeholder="What do you think?">
+                </div>
+                <hr>
+                <div class="create-bottom flex-row">
+                    <li class=" flex-row">
+                        <img src="image/feed/16.png" alt="">
+                        <span>live Video</span>
+                    </li>
+
+                    <li class=" flex-row">
+                        <img src="image/feed/17.png" alt="">
+                        <span>Photo/Video</span>
+                    </li>
+
+                    <li class=" flex-row">
+                        <img src="image/feed/18.png" alt="">
+                        <span>Feeling/Activity</span>
+                    </li>
+                </div>
+                <button onclick="postIt()" id="btn-post">Post It</button>
+            </div>
+            <div class="feed flex-col">
+                <div class="feed-top flex-row">
+                    <div class="feed-profile flex-row">
+                        <img width="32" src="image/feed/19.png" alt="">
+                    </div>
+                    <div class="feed-name flex-col">
+                        <span>Husni Mudzakir</span>
+                        <span>Sponsored<img src="image/feed/21.png" alt=""></span>
+                    </div>
+                    <div class="feed-more flex-row">
+                        <img src="image/feed/20.png" alt="">
+                    </div>
+                </div>
+                <p>We are Sparta Coding Club! Our mission is to create a world where everyone can make an impact with
+                    technology. Join Us Now!</p>
+                <img height="340" src="image/feed/30.jpg" alt="">
+                <div class="feed-like flex-row">
+                    <img src="image/feed/23.png" alt="">
+                    <span class="like-count">1m</span>
+                    <span>9k Share</span>
+                </div>
+                <div class="feed-button flex-row">
+                    <li class="flex-row">
+                        <img width="24" src="image/feed/24.png" alt="">
+                        <span>Like</span>
+                    </li>
+                    <li class="flex-row">
+                        <img width="24" src="image/feed/25.png" alt="">
+                        <span>Comment</span>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-modal" id="menu-modal">
+        <span>Menu</span>
+        <div class="content flex-row">
+            <div class="social flex-col">
+                <div class="modal-search-box flex-row">
+                    <i id="search-box" class="bi bi-search"></i>
+                    <input type="text" placeholder="Search Menu">
+                </div>
+                <span>Social</span>
+                <li class="flex-row">
+                    <img width="35" src="image/modal/1.png" alt="">
+                    <div>
+                        <span>Events</span>
+                        <p>Kelola atau temukan acara dan hal lain untuk dilakukan secara online dan di sekitar.</p>
+                    </div>
+                </li>
+                <li class="flex-row">
+                    <img width="35" src="image/modal/2.png" alt="">
+                    <div>
+                        <span>Friends</span>
+                        <p>Cari teman atau orang yang mungkin Anda kenal. </p>
+                    </div>
+                </li>
+                <li class="flex-row">
+                    <img width="35" src="image/modal/3.png" alt="">
+                    <div>
+                        <span>Groups</span>
+                        <p>Berinteraksi dengan orang yang memiliki minat yang sama.</p>
+                    </div>
+                </li>
+                <li class="flex-row">
+                    <img width="35" src="image/modal/4.png" alt="">
+                    <div>
+                        <span>News Feed</span>
+                        <p>Lihat postingan terbaru dari teman, grup, Halaman, dan lainnya.</p>
+                    </div>
+                </li>
+                <li class="flex-row">
+                    <img width="35" src="image/modal/5.png" alt="">
+                    <div>
+                        <span>Favorites</span>
+                        <p>Lihat postingan Berdasarkan Favorites anda</p>
+                    </div>
+                </li>
+            </div>
+            <div class="modal-create flex-col">
+                <span>Create</span>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/6.png" alt="">
+                    </div>
+                    <span>Posting</span>
+                </li>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/7.png" alt="">
+                    </div>
+                    <span>Cerita</span>
+                </li>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/8.png" alt="">
+                    </div>
+                    <span>Room</span>
+                </li>
+                <hr>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/9.png" alt="">
+                    </div>
+                    <span>Page</span>
+                </li>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/10.png" alt="">
+                    </div>
+                    <span>Ads</span>
+                </li>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/11.png" alt="">
+                    </div>
+                    <span>Groups</span>
+                </li>
+                <li class="flex-row">
+                    <div class="flex-row">
+                        <img width="22" src="image/modal/12.png" alt="">
+                    </div>
+                    <span>Events</span>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div class="account-modal" id="account-modal">
+        <div class="account-info flex-col">
+            <div class="account-profile flex-row">
+                <div class="flex-row">
+                    <img width="44" src="image/gnb/Me.jpg">
+                </div>
+                <span>Husni Mudzakir</span>
+            </div>
+            <hr>
+            <div class="flex-col">See all profiles</div>
+        </div>
+        <li class=" flex-row">
+            <div class="flex-row">
+                <img width="22" src="image/modal/13.png" alt="">
+            </div>
+            <span>Settings & privacy</span>
+            <img width="24" src="image/modal/18.png" alt="">
+        </li>
+        <li class="flex-row">
+            <div class="flex-row">
+                <img width="22" src="image/modal/14.png" alt="">
+            </div>
+            <span>Help & support</span>
+            <img width="24" src="image/modal/18.png" alt="">
+        </li>
+        <li class="flex-row">
+            <div class="flex-row">
+                <img width="22" src="image/modal/15.png" alt="">
+            </div>
+            <span>Display & accessibility </span>
+            <img width="24" src="image/modal/18.png" alt="">
+        </li>
+        <li class="flex-row">
+            <div class="flex-row">
+                <img width="22" src="image/modal/16.png" alt="">
+            </div>
+            <span>Give feedback</span>
+        </li>
+        <li class="flex-row">
+            <div class="flex-row">
+                <img width="22" src="image/modal/17.png" alt="">
+            </div>
+            <span>Log Out</span>
+        </li>
+    </div>
+</body>
+
+</html>
